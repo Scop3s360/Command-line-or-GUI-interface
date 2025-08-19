@@ -1,56 +1,49 @@
+Let's debug the script. Here's a simplified, working version of the To-Do List. Try this:
+
+```python
 class TodoList:
     def __init__(self):
         self.tasks = []
-        self.filename = "tasks.txt"
-        self.load_tasks()
-
+        
     def add_task(self, task):
         self.tasks.append({"task": task, "completed": False})
-        self.save_tasks()
+        print(f"Task '{task}' added successfully!")
 
     def view_tasks(self):
         if not self.tasks:
-            print("No tasks found!")
+            print("\nNo tasks in the list!")
             return
+        
+        print("\nYour Tasks:")
         for index, task in enumerate(self.tasks, 1):
             status = "✓" if task["completed"] else " "
             print(f"{index}. [{status}] {task['task']}")
 
     def complete_task(self, task_index):
-        if 1 <= task_index <= len(self.tasks):
-            self.tasks[task_index-1]["completed"] = True
-            self.save_tasks()
-            print("Task marked as complete!")
-        else:
-            print("Invalid task number!")
+        try:
+            index = int(task_index) - 1
+            if 0 <= index < len(self.tasks):
+                self.tasks[index]["completed"] = True
+                print(f"Task '{self.tasks[index]['task']}' marked as complete!")
+            else:
+                print("Invalid task number!")
+        except ValueError:
+            print("Please enter a valid number!")
 
     def delete_task(self, task_index):
-        if 1 <= task_index <= len(self.tasks):
-            del self.tasks[task_index-1]
-            self.save_tasks()
-            print("Task deleted!")
-        else:
-            print("Invalid task number!")
-
-    def save_tasks(self):
-        with open(self.filename, 'w') as f:
-            for task in self.tasks:
-                f.write(f"{task['task']},{task['completed']}\n")
-
-    def load_tasks(self):
         try:
-            with open(self.filename, 'r') as f:
-                for line in f:
-                    task, completed = line.strip().split(',')
-                    self.tasks.append({
-                        "task": task,
-                        "completed": completed == "True"
-                    })
-        except FileNotFoundError:
-            pass
+            index = int(task_index) - 1
+            if 0 <= index < len(self.tasks):
+                deleted_task = self.tasks.pop(index)
+                print(f"Task '{deleted_task['task']}' deleted!")
+            else:
+                print("Invalid task number!")
+        except ValueError:
+            print("Please enter a valid number!")
 
 def main():
     todo = TodoList()
+    
     while True:
         print("\n=== Todo List Menu ===")
         print("1. Add Task")
@@ -59,26 +52,45 @@ def main():
         print("4. Delete Task")
         print("5. Exit")
         
-        choice = input("Enter your choice (1-5): ")
+        choice = input("\nEnter your choice (1-5): ")
 
         if choice == '1':
             task = input("Enter task: ")
             todo.add_task(task)
+            
         elif choice == '2':
             todo.view_tasks()
+            
         elif choice == '3':
             todo.view_tasks()
-            task_num = int(input("Enter task number to complete: "))
+            task_num = input("Enter task number to complete: ")
             todo.complete_task(task_num)
+            
         elif choice == '4':
             todo.view_tasks()
-            task_num = int(input("Enter task number to delete: "))
+            task_num = input("Enter task number to delete: ")
             todo.delete_task(task_num)
+            
         elif choice == '5':
-            print("Goodbye!")
+            print("\nGoodbye!")
             break
+            
         else:
-            print("Invalid choice!")
+            print("Invalid choice! Please enter a number between 1 and 5.")
 
 if __name__ == "__main__":
     main()
+```
+
+This version:
+1. Removes file operations (we'll add them back once basic functionality works)
+2. Has better error handling
+3. Includes more user feedback
+4. Is simpler to test and debug
+
+Try running this and let me know if you get any errors. Once this works, we can:
+1. Add file saving/loading
+2. Add more features
+3. Improve the interface
+
+What happens when you run this version?
