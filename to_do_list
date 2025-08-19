@@ -8,10 +8,10 @@ class TodoList:
 
     def view_tasks(self):
         if not self.tasks:
-            print("\nNo tasks in the list!")
+            print("No tasks in the list!")
             return
         
-        print("\nYour Tasks:")
+        print("Your Tasks:")
         for index, task in enumerate(self.tasks, 1):
             status = "✓" if task["completed"] else " "
             print(f"{index}. [{status}] {task['task']}")
