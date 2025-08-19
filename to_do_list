@@ -1,6 +1,3 @@
-Let's debug the script. Here's a simplified, working version of the To-Do List. Try this:
-
-```python
 class TodoList:
     def __init__(self):
         self.tasks = []
@@ -80,17 +77,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
-
-This version:
-1. Removes file operations (we'll add them back once basic functionality works)
-2. Has better error handling
-3. Includes more user feedback
-4. Is simpler to test and debug
-
-Try running this and let me know if you get any errors. Once this works, we can:
-1. Add file saving/loading
-2. Add more features
-3. Improve the interface
-
-What happens when you run this version?
