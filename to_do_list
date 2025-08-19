@@ -42,17 +42,17 @@ def main():
     todo = TodoList()
     
     while True:
-        print("\n=== Todo List Menu ===")
+        print("=== Todo List Menu ===")
         print("1. Add Task")
         print("2. View Tasks")
         print("3. Complete Task")
         print("4. Delete Task")
         print("5. Exit")
         
-        choice = input("\nEnter your choice (1-5): ")
+        choice = input("Enter your choice (1-5):")
 
         if choice == '1':
-            task = input("Enter task: ")
+            task = input("Enter task:")
             todo.add_task(task)
             
         elif choice == '2':
@@ -69,7 +69,7 @@ def main():
             todo.delete_task(task_num)
             
         elif choice == '5':
-            print("\nGoodbye!")
+            print("Goodbye!")
             break
             
         else:
