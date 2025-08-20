@@ -1,10 +1,30 @@
+from datetime import datetime
+
 class TodoList:
     def __init__(self):
         self.tasks = []
-        
+            
     def add_task(self, task):
-        self.tasks.append({"task": task, "completed": False})
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.tasks.append({
+            "task": f"{task} (Added: {timestamp})",
+            "completed": False
+        })
         print(f"Task '{task}' added successfully!")
+                    
+    def update_task(self, task_index, new_task):
+        adjusted_index = task_index - 1  # Subtract 1 from user input to match zero-based indexing
+        if 0 <= adjusted_index < len(self.tasks):
+            original_task = self.tasks[adjusted_index]["task"]
+            timestamp_part = original_task.split("(Added: ")[1]
+            updated_task = f"{new_task} (Added: {timestamp_part}"
+            self.tasks[adjusted_index] = {
+                "task": updated_task,
+                "completed": False
+            }
+            print(f"Task updated to '{new_task}'")
+        else:
+            print("Invalid task number. Please try again.")
 
     def view_tasks(self):
         if not self.tasks:
@@ -45,9 +65,10 @@ def main():
         print("=== Todo List Menu ===")
         print("1. Add Task")
         print("2. View Tasks")
-        print("3. Complete Task")
-        print("4. Delete Task")
-        print("5. Exit")
+        print("3. Amend Task")
+        print("4. Complete Task")
+        print("5. Delete Task")
+        print("6. Exit")
         
         choice = input("Enter your choice (1-5):")
 
@@ -57,18 +78,26 @@ def main():
             
         elif choice == '2':
             todo.view_tasks()
-            
+        
         elif choice == '3':
+            try:
+                task_index = int(input("Enter the number of the task you want to amend: "))
+                new_task = input("Enter the new task text: ")
+                todo.update_task(task_index, new_task)
+            except ValueError:
+                print("Please enter a valid number.")
+
+        elif choice == '4':
             todo.view_tasks()
             task_num = input("Enter task number to complete: ")
             todo.complete_task(task_num)
             
-        elif choice == '4':
+        elif choice == '5':
             todo.view_tasks()
             task_num = input("Enter task number to delete: ")
             todo.delete_task(task_num)
             
-        elif choice == '5':
+        elif choice == '6':
             print("Goodbye!")
             break
             
